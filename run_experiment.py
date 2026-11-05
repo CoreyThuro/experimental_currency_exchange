@@ -8,6 +8,12 @@ N_RUNS independent simulations, then prints a cross-condition comparison.
     python run_experiment.py                  # all three conditions, 5 runs each
     python run_experiment.py --condition A    # single condition
     python run_experiment.py --runs 2         # quick smoke-test
+
+Each run writes three files to the log directory:
+    condition_<C>_seed<N>.jsonl              per-tick simulation log
+    reasoning_condition_<C>_seed<N>.jsonl    per-decision LLM reasoning
+    condition_<C>_seed<N>.meta.json          config, system prompts, code hashes
+Existing files are never overwritten unless --overwrite is passed.
 """
 
 import argparse
