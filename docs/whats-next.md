@@ -1,4 +1,4 @@
-# What's Next — Project Xeno-Capitalism
+# What's Next — Modulo Dilemma
 
 *Status as of Phase 3 complete. Conditions A/B/C run with 2 seeds each.*
 
@@ -47,7 +47,7 @@ Three separate changes are required, not just a flag:
 
 ### What to measure
 
-Run the capitalism baseline with all three LLM prompt conditions (A, B, C) over 5+ seeds each. For every run, track the three metrics defined in `newplan.md`:
+Run the capitalism baseline with all three LLM prompt conditions (A, B, C) over 5+ seeds each. For every run, track the three metrics defined in [plan.md](plan.md):
 
 1. **Population survival curve** — % of agents alive at tick 50, 100, 150, 200
 2. **Gini coefficient of energy** — inequality in the survival resource over time
@@ -66,9 +66,9 @@ The current A/B/C data (2 seeds each) is illustrative, not statistical. The plan
 The existing logs cover seeds 42 and 43 (2 runs per condition). Log files are opened in write mode, so running `--runs 5` from the default base seed would **overwrite** seeds 42 and 43. To add 3 more seeds safely:
 
 ```
-python run_experiment.py --condition A --runs 3 --seed 44
-python run_experiment.py --condition B --runs 3 --seed 44
-python run_experiment.py --condition C --runs 3 --seed 44
+python -m modulo_dilemma.run_experiment --condition A --runs 3 --seed 44
+python -m modulo_dilemma.run_experiment --condition B --runs 3 --seed 44
+python -m modulo_dilemma.run_experiment --condition C --runs 3 --seed 44
 ```
 
 This produces seeds 44, 45, 46 and leaves the existing seed-42/43 logs intact.
@@ -132,7 +132,7 @@ Vault balance is public. Tests whether agents invent a functional commons (safet
 
 ## Open Questions Carried Forward
 
-From `initial-outcomes.md`:
+From [initial-outcomes.md](initial-outcomes.md):
 
 1. **Information asymmetry removal (→ Condition D):** Would visible balances allow conditional cooperation to emerge without new archetypes?
 2. **Communication channels (→ Condition E):** Can free-form messaging substitute for perfect information? Will agents lie?

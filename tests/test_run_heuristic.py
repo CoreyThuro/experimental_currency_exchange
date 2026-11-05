@@ -1,6 +1,6 @@
 import pytest
 from unittest.mock import patch
-from run_heuristic import TuningFailure, tune_and_run, validate
+from modulo_dilemma.run_heuristic import TuningFailure, tune_and_run, validate
 
 
 def _failing_checks():
@@ -14,8 +14,8 @@ def _failing_checks():
 
 
 def test_tuning_failure_raised_when_no_candidate_passes():
-    with patch("run_heuristic.run_simulation") as mock_run, \
-         patch("run_heuristic.validate") as mock_validate:
+    with patch("modulo_dilemma.run_heuristic.run_simulation") as mock_run, \
+         patch("modulo_dilemma.run_heuristic.validate") as mock_validate:
         mock_run.return_value = ({}, [])
         mock_validate.return_value = _failing_checks()
         with pytest.raises(TuningFailure) as exc_info:
@@ -24,8 +24,8 @@ def test_tuning_failure_raised_when_no_candidate_passes():
 
 
 def test_tuning_failure_carries_best_drain_and_checks():
-    with patch("run_heuristic.run_simulation") as mock_run, \
-         patch("run_heuristic.validate") as mock_validate:
+    with patch("modulo_dilemma.run_heuristic.run_simulation") as mock_run, \
+         patch("modulo_dilemma.run_heuristic.validate") as mock_validate:
         mock_run.return_value = ({}, [])
         mock_validate.return_value = _failing_checks()
         with pytest.raises(TuningFailure) as exc_info:
@@ -46,8 +46,8 @@ def test_tune_and_run_returns_on_first_passing_candidate():
         call_count += 1
         return passing
 
-    with patch("run_heuristic.run_simulation") as mock_run, \
-         patch("run_heuristic.validate", side_effect=fake_validate):
+    with patch("modulo_dilemma.run_heuristic.run_simulation") as mock_run, \
+         patch("modulo_dilemma.run_heuristic.validate", side_effect=fake_validate):
         mock_run.return_value = ({"agent_stats": {}, "survivors": [], "total_ticks": 0}, [])
         result = tune_and_run(seed=0)
 

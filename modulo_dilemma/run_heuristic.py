@@ -6,20 +6,21 @@ Runs 2 WorkThenBuy, 2 AccumulateHigh, 1 TransferOnSignal, and 1 CycleThrough
 for up to 200 ticks. Checks all five plan validation criteria and prints tuning
 hints if any fail.  Run directly:
 
-    python run_heuristic.py
+    python -m modulo_dilemma.run_heuristic
 """
 
 import sys
 from pathlib import Path
 
-from bots import (
+from . import DATA_DIR
+from .bots import (
     BUY_RATE_THRESHOLD,
     CycleThroughBot,
     HoarderBot,
     SaboteurBot,
     SpenderBot,
 )
-from environment import Environment
+from .environment import Environment
 
 # Agent roster: (agent_id, role_label)
 # Role labels match plan terminology: WorkThenBuy, AccumulateHigh, TransferOnSignal, CycleThrough
@@ -276,7 +277,7 @@ def _print_tuning_hints(checks: dict, drain_used: int) -> None:
 # ── Entry point ───────────────────────────────────────────────────────────────
 
 if __name__ == "__main__":
-    log = Path("heuristic_run.jsonl")
+    log = DATA_DIR / "heuristic_run.jsonl"
     print("Running Phase 3 heuristic simulation…")
     print("Auto-tuning ENERGY_DRAIN if any check fails.\n")
 
