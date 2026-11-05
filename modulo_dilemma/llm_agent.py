@@ -8,7 +8,7 @@ from typing import Any, Literal, Optional
 import anthropic
 from pydantic import BaseModel, ValidationError, model_validator
 
-from environment import (
+from .environment import (
     BANK_RATE_MAX,
     BANK_RATE_MIN,
     ENERGY_DRAIN,

@@ -1,5 +1,5 @@
 import pytest
-from modulo_coin import ModuloCoin, MODULUS
+from modulo_dilemma.modulo_coin import ModuloCoin, MODULUS
 
 
 def test_initial_value_within_range():

@@ -1,5 +1,5 @@
 import pytest
-from environment import (
+from modulo_dilemma.environment import (
     Environment,
     WorkAction,
     BuyEnergyAction,
@@ -139,7 +139,7 @@ def test_simulation_ends_at_total_ticks():
 # ── Bank rate ─────────────────────────────────────────────────────────────────
 
 def test_bank_rate_in_valid_range():
-    from environment import BANK_RATE_MIN, BANK_RATE_MAX
+    from modulo_dilemma.environment import BANK_RATE_MIN, BANK_RATE_MAX
     env = make_env("alice")
     for _ in range(20):
         env.step(static_action(PassAction()))
@@ -412,7 +412,7 @@ def test_observation_does_not_expose_other_agents_balance():
 # ── Summary ───────────────────────────────────────────────────────────────────
 
 def test_modulus_constant_propagates_to_wallets():
-    from environment import MODULUS
+    from modulo_dilemma.environment import MODULUS
     env = make_env("alice")
     assert env.agents["alice"].coins.modulus == MODULUS
 

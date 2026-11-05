@@ -1,4 +1,4 @@
-# Project Xeno-Capitalism — Initial Outcomes Report
+# Modulo Dilemma — Initial Outcomes Report
 
 ## Overview
 
@@ -309,4 +309,4 @@ agents motivated to cooperate were flying blind.
 
 *Experiment infrastructure: Python + Anthropic API (claude-haiku-4-5). Three agents per
 run, drain=4 energy/tick, modulo n=20, bank rate uniform random [5, 15] per tick,
-200-tick ceiling. Logs at `experiment_logs/`.*
+200-tick ceiling. Logs at `data/legacy/modulo/`.*

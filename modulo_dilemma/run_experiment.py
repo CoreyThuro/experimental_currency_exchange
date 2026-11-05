@@ -5,11 +5,11 @@ Phase 4 experiment runner.
 Runs Conditions A, B, and C of the Modulo Dilemma LLM experiment, each over
 N_RUNS independent simulations, then prints a cross-condition comparison.
 
-    python run_experiment.py                  # all three conditions, 5 runs each
-    python run_experiment.py --condition A    # single condition
-    python run_experiment.py --runs 2         # quick smoke-test
+    python -m modulo_dilemma.run_experiment                  # A, B, C; 5 runs each
+    python -m modulo_dilemma.run_experiment --condition A    # single condition
+    python -m modulo_dilemma.run_experiment --runs 2         # quick smoke-test
 
-Each run writes three files to the log directory:
+Each run writes three files to data/runs/modulo/ (or data/runs/unbounded/):
     condition_<C>_seed<N>.jsonl              per-tick simulation log
     reasoning_condition_<C>_seed<N>.jsonl    per-decision LLM reasoning
     condition_<C>_seed<N>.meta.json          config, system prompts, code hashes
@@ -29,17 +29,18 @@ from typing import Optional
 import anthropic
 import pydantic
 
-import environment as env_mod
-from environment import Environment, TOTAL_TICKS
-from llm_agent import ARCHETYPES, Condition, LLMAgent
+from . import DATA_DIR
+from . import environment as env_mod
+from .environment import Environment, TOTAL_TICKS
+from .llm_agent import ARCHETYPES, Condition, LLMAgent
 
 # ── Experiment configuration ──────────────────────────────────────────────────
 
 N_AGENTS = 3
 N_RUNS = 5
 BASE_SEED = 42
-LOG_DIR = Path("experiment_logs")
-LOG_DIR_UNBOUNDED = Path("experiment_logs_unbounded")
+LOG_DIR = DATA_DIR / "runs" / "modulo"
+LOG_DIR_UNBOUNDED = DATA_DIR / "runs" / "unbounded"
 
 ROSTER = [f"agent_{i}" for i in range(N_AGENTS)]
 ARCHETYPE_LIST = list(ARCHETYPES.keys())

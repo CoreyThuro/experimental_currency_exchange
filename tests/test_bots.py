@@ -1,7 +1,7 @@
 import pytest
-from environment import BuyEnergyAction, PassAction, TransferAction, WorkAction
-from bots import BUY_RATE_THRESHOLD, CycleThroughBot, HoarderBot, SaboteurBot, SpenderBot
-from ledger import LedgerEntry, PublicLedger
+from modulo_dilemma.environment import BuyEnergyAction, PassAction, TransferAction, WorkAction
+from modulo_dilemma.bots import BUY_RATE_THRESHOLD, CycleThroughBot, HoarderBot, SaboteurBot, SpenderBot
+from modulo_dilemma.ledger import LedgerEntry, PublicLedger
 
 
 def obs(

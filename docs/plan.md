@@ -1,4 +1,14 @@
-# Project Xeno-Capitalism: Converged Implementation Plan
+# Modulo Dilemma: Converged Implementation Plan
+
+## Context for New Contributors
+
+This plan was produced through an extended adversarial design process between two LLMs (Claude and Gemini) and a human project lead. It started as an over-engineered PRD with five sub-agents and quantum currencies, and was iteratively stripped down to the tightest testable design we could find. If something seems surprisingly specific or if a simpler approach was rejected, it's probably because we tried it and found a problem. The key debates and their resolutions:
+
+- **Why no agent framework (LangChain, etc.)?** Adds dependency complexity for no benefit at this scale. Each agent is a function: observe state → build prompt → call LLM API → parse JSON response. Use Pydantic for schema validation.
+- **Why no Qbitcoin?** Parked in the backlog. We need to master one currency's sociology before adding probabilistic mechanics. See the end of this document.
+- **Why are the heuristic bots named so blandly?** Deliberately. Early drafts used names like "The Saboteur" and "The Hoarder," which pre-loaded cultural interpretations onto what should be neutral mechanical tests. The bots test plumbing, not sociology.
+- **Why does the plan never call wraparound "bad" or "wealth destruction"?** Because that's a cultural assumption from our economy, not a property of the math. Whether wraparound is a catastrophe or a useful tool is an experimental question. The prompts, logs, and analysis must stay neutral on this.
+- **Why is there a capitalism baseline?** You can't claim a modulo economy performs "better" without measuring the alternative under identical conditions. The capitalism baseline is the same simulation with the modulus removed.
 
 ## What This Is
 
@@ -7,6 +17,22 @@ An experimental simulation exploring whether AI agents develop emergent social a
 The simulation runs in two phases: first with hardcoded heuristic bots to validate that the game theory works mechanically, then with LLM-powered agents to observe whether social reasoning, trust, and proto-cultural behavior emerge.
 
 **Key methodological principle:** The simulation describes mechanics, not values. Wraparound is a property of the currency, not a punishment. The prompts, the logging, and the analysis must all avoid encoding assumptions about which strategies are "good" or "rational." Discovering how agents *interpret* the mechanics is the experiment — presupposing that interpretation defeats the purpose.
+
+## The Research Question
+
+Can a civilization running on modular-arithmetic currency sustain its population as well as or better than one running on standard unbounded currency (i.e., conventional capitalism)?
+
+In standard capitalism, survival is achieved through accumulation. The system trends toward Pareto distributions: a few agents hoard enough to become effectively immortal while many live precariously. Average survival may look acceptable, but variance is brutal.
+
+A modular economy mechanically prevents unbounded accumulation. No agent can ever become "rich" in the hoarding sense. If the population survives long-term, it must do so through velocity of exchange and interdependence rather than individual stockpiling. The question is: under what conditions (if any) does this produce better collective outcomes?
+
+"Better" is measured by three concrete metrics, compared across all experimental conditions:
+
+**Metric 1 — Population Survival Curve:** What percentage of agents are still alive at tick 50, 100, 150, 200? Plot the curve for each condition. A system that keeps more agents alive longer is performing better at collective survival, regardless of what happens to the top performers.
+
+**Metric 2 — Gini Coefficient of Energy:** How unequal is access to the survival resource at each tick? A score of 0 means perfect equality; 1 means one agent has everything. Track this over time, not just at the end.
+
+**Metric 3 — Minimum Lifespan (The Floor):** The tick at which the first agent dies. A system that keeps its most vulnerable member alive to tick 80 is arguably more robust than one where the weakest dies at tick 10, even if the latter has a higher average lifespan. This metric specifically captures whether the system protects its worst-off participants.
 
 ---
 
@@ -192,9 +218,29 @@ Do not proceed to LLM agents until all five checks pass. Tune the constants in t
 
 ---
 
-## Phase 4: LLM Agent Simulation (The Experiment)
+## Phase 4: The Capitalism Baseline
 
-Once the heuristic bots prove the mechanics work, replace them with LLM-powered agents. Run three experimental conditions.
+Before running any LLM experiments with modular currency, run the identical simulation with **unbounded currency** — standard arithmetic, no modulus. This is your capitalism control group.
+
+### Setup
+
+Everything is the same as the Modulo simulation: same tick loop, same energy drain (5/tick), same bank with the same price fluctuation (5–15 energy per coin), same work action table, same starting energy (100), same agent count. The only change: remove the `mod n` operation. Balances can grow without limit.
+
+### What to Measure
+
+Track all three comparison metrics (survival curve, Gini coefficient, minimum lifespan) across the same 200-tick window. Also log the maximum balance any single agent reaches — this characterizes whether accumulation actually occurs under these conditions.
+
+### What Not to Assume
+
+It's tempting to predict that unbounded currency will produce Pareto inequality — a few immortal hoarders and many dead agents. That might happen. But LLM agents prompted to reason about survival (not wealth maximization) might behave differently. If the capitalism baseline *doesn't* produce inequality, that's itself an important finding: it would suggest that extreme accumulation is a property of agent goals, not currency mechanics. Do not presuppose the outcome.
+
+Run the capitalism baseline with all three LLM prompt conditions (A: Myopic, B: Social Scaffolding, C: Cultural Archetypes) so you can compare modulo vs. unbounded for each condition independently.
+
+---
+
+## Phase 5: LLM Agent Simulation — Modulo Conditions A, B, C
+
+Once the heuristic bots prove the mechanics work, replace them with LLM-powered agents. Run three experimental conditions under modular currency.
 
 ### Condition A: Myopic Control
 
@@ -232,16 +278,77 @@ Same prompt as Condition B, plus one of several cultural backstories assigned to
 
 **The Accelerationist:** "You belong to a dissident movement that believes the modulus itself is unjust. You seek to push others over the threshold, believing that if enough agents experience wraparound simultaneously, it will expose the system's cruelty and force change."
 
-### What to Compare Across Conditions
+### What to Compare Across A, B, C (and Against the Capitalism Baseline)
 
 For each condition, run 5+ simulations (LLM outputs are stochastic) and compare:
 
-- **Average lifespan** across conditions. Does social reasoning (B) improve survival over myopic play (A)?
+- **The three core metrics** (survival curve, Gini coefficient, minimum lifespan) — compared both across A/B/C and against the capitalism baseline runs.
 - **Cooperation frequency.** Count mutual aid events (agent holds coins for another, then returns them). Does this appear in B but not A?
 - **Wraparound attitudes.** Do agents treat wraparound as a threat to avoid, a tool to exploit, or a neutral fact? Do they develop strategies that deliberately use it? This is one of the most interesting cultural signals — it reveals whether agents import human-like loss aversion or reason freshly about the mechanics.
 - **Unsolicited transfer patterns.** Do agents send coins to others? If so, is it cooperative (helping someone buy energy), hostile (trying to trigger wraparound), or something we didn't anticipate? Does Condition C (Accelerationist agents) produce more of this than B?
 - **Strategy diversity.** Do agents in B converge on one strategy or differentiate? Do cultural prompts in C produce detectably different behavioral signatures?
 - **Agent reasoning logs.** Capture the chain-of-thought / reflection text. This is the primary cultural data — read it qualitatively, not just quantitatively.
+
+---
+
+## Phase 6: Progressive Infrastructure Conditions (D → E → F)
+
+If Conditions A–C show that the modulo economy struggles to sustain its population, we test what *minimum institutional support* is needed to make it viable. These conditions are run as a progressive sequence, not a menu — each one is a fallback that answers "how much help does this economy need?"
+
+### Condition D: Transparency
+
+Change the observation payload so that all agent coin balances and energy levels are public. Every agent can see every other agent's exact state each tick.
+
+No new actions. No new mechanics. Just remove the information asymmetry.
+
+**The question:** Is perfect information enough for agents to coordinate around a stable equilibrium (roughly n/2 coins)? Can they see who's in danger and help without being told to?
+
+If D produces sustainable collective survival (measured by the three metrics), then the modulo economy's failure in A–C was an information problem, not a structural one. That's an important finding — it means the currency works, the agents just couldn't see well enough to cooperate.
+
+### Condition E: Communication
+
+If D fails, or even if it succeeds (to test a more realistic privacy model), revert to private balances and add a new action:
+
+```
+broadcast_status(message: str)
+    Send a free-text message (max 10 words) to the public ledger.
+    Costs 1 Energy.
+```
+
+Agents can now ask for help, warn others, lie about their balance, negotiate, threaten, or say anything they want — in 10 words.
+
+**The question:** Can language substitute for perfect information? Will agents be honest? Will they develop shorthand or conventions? Will they lie strategically? This is the condition with the highest potential for genuinely surprising emergent behavior.
+
+**What to log:** Every broadcast message, verbatim. These are primary cultural data. Also track: do agents who broadcast survive longer? Do agents respond to broadcasts? Do repeated liars get ignored?
+
+### Condition F: The Communal Vault
+
+If E still produces mass die-offs, introduce a mechanical institution: a shared vault.
+
+```
+deposit_to_vault(amount: int)
+    Transfer coins from personal wallet to the communal vault.
+    The vault has no modulus limit (or a much higher one, e.g., n=1000).
+
+withdraw_from_vault(amount: int)
+    Transfer coins from the vault to personal wallet.
+    Subject to the agent's personal modulus — cannot withdraw if it
+    would push them past n.
+```
+
+The vault is visible to all agents (current total is public). Any agent can deposit or withdraw.
+
+**The question:** Will agents use the vault as a public safety net — dumping dangerous excess wealth to avoid wraparound and drawing from it when starving? Or will some agents free-ride, draining the vault without contributing? This tests whether the modulo economy can invent a functional commons.
+
+### Interpreting the D → E → F Sequence
+
+The sequence answers a single graduated question: **how much institutional infrastructure does a modulo civilization need to match or exceed conventional capitalism's survival outcomes?**
+
+- If A–C already match capitalism: the currency mechanics alone are sufficient. The modulus is not a handicap.
+- If D is required: the economy needs transparency to function — privacy is a luxury this currency can't afford.
+- If E is required: the economy needs language and negotiation — agents must be able to signal and coordinate explicitly.
+- If F is required: the economy needs shared institutions — individual agents cannot solve the collective problem alone.
+- If F still fails: the modulo economy may be structurally non-viable at this parameterization. Try different values of n, or accept that this currency produces worse collective outcomes than unbounded accumulation.
 
 ---
 
@@ -262,15 +369,21 @@ For each condition, run 5+ simulations (LLM outputs are stochastic) and compare:
 ## Build Order
 
 ```
-Step 1: ModuloCoin class with modular arithmetic and wraparound logging
-Step 2: Environment class (tick loop, energy drain, bank, death)
-Step 3: Action resolution (work, buy_energy, transfer, pass)
-Step 4: Public ledger
-Step 5: Four heuristic bots
-Step 6: Run heuristic simulation, tune constants until the five checks pass
-Step 7: LLM agent wrapper (prompt builder, API call, Pydantic response parser)
-Step 8: Run Condition A, B, C
-Step 9: Analysis
+Step 1:  ModuloCoin class with modular arithmetic and wraparound logging
+Step 2:  Environment class (tick loop, energy drain, bank, death)
+Step 3:  Action resolution (work, buy_energy, transfer, pass)
+Step 4:  Public ledger
+Step 5:  Four heuristic bots
+Step 6:  Run heuristic simulation, tune constants until the five checks pass
+Step 7:  Unbounded currency mode (toggle modulus on/off for capitalism baseline)
+Step 8:  LLM agent wrapper (prompt builder, API call, Pydantic response parser)
+Step 9:  Run capitalism baseline (Conditions A, B, C with unbounded currency)
+Step 10: Run modulo Conditions A, B, C
+Step 11: Compare metrics across all runs
+Step 12: If modulo underperforms: implement Condition D (public balances)
+Step 13: If D insufficient: implement Condition E (broadcast_status action)
+Step 14: If E insufficient: implement Condition F (communal vault)
+Step 15: Final comparative analysis across all conditions
 ```
 
 ---

@@ -3,9 +3,9 @@ from unittest.mock import MagicMock
 
 import anthropic
 
-from environment import ENERGY_DRAIN
-from llm_agent import Condition
-from run_experiment import ROSTER, existing_run_files, run_one, run_paths
+from modulo_dilemma.environment import ENERGY_DRAIN
+from modulo_dilemma.llm_agent import Condition
+from modulo_dilemma.run_experiment import ROSTER, existing_run_files, run_one, run_paths
 
 
 def pass_client() -> MagicMock:

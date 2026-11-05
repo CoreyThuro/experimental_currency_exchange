@@ -2,8 +2,8 @@ import pytest
 from pydantic import ValidationError
 from unittest.mock import MagicMock, patch
 
-from environment import BuyEnergyAction, PassAction, TransferAction, WorkAction
-from llm_agent import (
+from modulo_dilemma.environment import BuyEnergyAction, PassAction, TransferAction, WorkAction
+from modulo_dilemma.llm_agent import (
     ARCHETYPES,
     ActionResponse,
     Condition,
@@ -341,11 +341,11 @@ class TestPromptMechanics:
         assert "more than 7 energy" in prompt
 
     def test_system_prompt_defaults_to_environment_drain(self):
-        from environment import ENERGY_DRAIN
+        from modulo_dilemma.environment import ENERGY_DRAIN
         assert f"loses {ENERGY_DRAIN} energy" in build_system_prompt(Condition.A)
 
     def test_system_prompt_work_table_matches_environment(self):
-        from environment import WORK_TABLE
+        from modulo_dilemma.environment import WORK_TABLE
         prompt = build_system_prompt(Condition.A)
         for effort, p in WORK_TABLE.items():
             assert f"{effort}: +{p['coins']} coin" in prompt
@@ -406,7 +406,7 @@ class TestDecideFailureLogging:
 
 
 def test_self_transfer_is_rejected_by_environment_not_redirected():
-    from environment import Environment
+    from modulo_dilemma.environment import Environment
     env = Environment(seed=1)
     for aid in ("agent_0", "agent_1"):
         env.add_agent(aid)

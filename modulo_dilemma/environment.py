@@ -4,8 +4,8 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any, Callable, Literal, Optional, Union
 
-from modulo_coin import ModuloCoin, WrapAroundEvent
-from ledger import LedgerEntry, PublicLedger
+from .modulo_coin import ModuloCoin, WrapAroundEvent
+from .ledger import LedgerEntry, PublicLedger
 
 # ── Simulation constants ──────────────────────────────────────────────────────
 MODULUS = 20

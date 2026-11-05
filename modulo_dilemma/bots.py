@@ -1,7 +1,7 @@
 from typing import Optional
 
-from environment import Action, BuyEnergyAction, PassAction, TransferAction, WorkAction
-from ledger import PublicLedger
+from .environment import Action, BuyEnergyAction, PassAction, TransferAction, WorkAction
+from .ledger import PublicLedger
 
 BUY_RATE_THRESHOLD = 8  # minimum bank rate at which buying energy is worthwhile
 
